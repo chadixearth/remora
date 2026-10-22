@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Remora</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <svg class="sprite" aria-hidden="true" focusable="false">
+      <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5" /><path d="M11 18.5h2" /></symbol>
+      <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1" /><path d="M14 10.5a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" /></symbol>
+      <symbol id="i-unlink" viewBox="0 0 24 24"><path d="M3 3l18 18" /><path d="M9.9 6.4l1.1-1.1a4 4 0 0 1 5.7 5.7l-1.1 1.1M14.1 17.6l-1.1 1.1a4 4 0 0 1-5.7-5.7l1.1-1.1" /></symbol>
+      <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9.5 7V4.5h5V7M6 7l1 12.5h10L18 7" /></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7.5 3v5.5c0 4.4-3.1 7.9-7.5 9.5-4.4-1.6-7.5-5.1-7.5-9.5V6z" /></symbol>
+      <symbol id="i-screen" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M8.5 20h7M12 16v4" /></symbol>
+      <symbol id="i-terminal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2.5" /><path d="M7 9.5l2.5 2.5L7 14.5M12.5 14.5H17" /></symbol>
+      <symbol id="i-command" viewBox="0 0 24 24"><path d="M5 7.5l5 4.5-5 4.5M12.5 18.5H19" /></symbol>
+      <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7.5a2 2 0 0 1 2-2h4l2 2.2h8a2 2 0 0 1 2 2v7.8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></symbol>
+      <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V4.5M7.5 9L12 4.5 16.5 9M4.5 15v3.5a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V15" /></symbol>
+      <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4.5V15M7.5 10.5L12 15l4.5-4.5M4.5 15v3.5a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V15" /></symbol>
+      <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2.5L4.5 13.5H11l-1 8 8.5-11H12z" /></symbol>
+      <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.6 2.9 2.6 15.1 0 18M12 3c-2.6 2.9-2.6 15.1 0 18" /></symbol>
+      <symbol id="i-dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5" fill="currentColor" stroke="none" /></symbol>
+      <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2" /><path d="M15.5 8.5V6.5a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h2" /></symbol>
+      <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3M19.5 4.5v4h-4" /></symbol>
+      <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3.5l9.5 16.5h-19z" /><path d="M12 10v4.5M12 17.5h.01" /></symbol>
+      <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4.5h5.5V10M19.5 4.5L11 13M17.5 14v4.5a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2v-10a2 2 0 0 1 2-2H10" /></symbol>
+      <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z" /></symbol>
+    </svg>
+
+    <div class="app">
+      <aside class="sidebar" aria-label="This computer">
+        <div class="brand">
+          <svg class="logo" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+            <rect width="32" height="32" rx="9" fill="#2dd4bf" />
+            <path d="M5.5 14.5h6" stroke="#0b0f14" stroke-width="2" stroke-linecap="round" />
+            <path d="M6.5 16c3.4-5.6 10.2-6.9 15-3.2l3.9-3.3v12.6l-3.9-3.3c-4.8 3.7-11.6 2.4-15-3.2z" fill="#0b0f14" />
+            <circle cx="11.4" cy="15.2" r="1.6" fill="#2dd4bf" />
+          </svg>
+          <div class="brand-text">
+            <h1 class="brand-name">Remora</h1>
+            <div class="brand-tag">Your laptop, in your pocket.</div>
+          </div>
+        </div>
+
+        <section class="card host" aria-labelledby="hostLabel">
+          <div class="eyebrow" id="hostLabel">This computer</div>
+          <button type="button" class="host-name" id="hostNameBtn" title="Rename this computer">
+            <span id="hostName">This computer</span>
+            <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-edit" /></svg>
+          </button>
+          <form class="rename" id="renameForm" hidden>
+            <input id="renameInput" type="text" maxlength="64" autocomplete="off" spellcheck="false" aria-label="Computer name" />
+          </form>
+          <div class="meta" id="hostMeta"></div>
+        </section>
+
+        <section class="card conn" id="conn" data-status="starting" aria-labelledby="connLabelHead">
+          <div class="row-between">
+            <span class="eyebrow" id="connLabelHead">Connection</span>
+            <span class="pill"><span class="dot" aria-hidden="true"></span><span id="connLabel">Starting</span></span>
+          </div>
+          <p class="conn-text" id="connText"></p>
+          <div class="url-row" id="urlRow" hidden>
+            <code class="url" id="connUrl"></code>
+            <button type="button" class="icon-btn" id="copyUrl" aria-label="Copy tunnel address" title="Copy address">
+              <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-copy" /></svg>
+            </button>
+          </div>
+          <p class="beacon-err" id="beaconErr" hidden></p>
+          <div class="conn-actions">
+            <button type="button" class="btn btn-ghost" id="retryBtn" hidden>
+              <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-refresh" /></svg>
+              Retry
+            </button>
+          </div>
+        </section>
+
+        <section class="card pair" id="pairCard" aria-labelledby="pairHead">
+          <div id="pairIdle">
+            <div class="pair-head">
+              <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-phone" /></svg>
+              <h2 id="pairHead">Pair a phone</h2>
+            </div>
+            <p class="pair-lead">Reach this computer from your phone, from anywhere.</p>
+            <button type="button" class="btn btn-primary btn-block" id="pairBtn">Pair a phone</button>
+          </div>
+          <div id="pairActive" hidden>
+            <div class="row-between pair-head">
+              <h2>Scan to pair</h2>
+              <span class="countdown" id="pairCountdown" aria-live="off"></span>
+            </div>
+            <div class="qr-wrap">
+              <img class="qr" id="qrImg" alt="QR code that pairs your phone with this computer" />
+            </div>
+            <p class="pair-steps">Scan with your phone camera → open in browser → Add to Home Screen</p>
+            <div class="pair-actions">
+              <button type="button" class="btn btn-ghost" id="copyLinkBtn">Copy link</button>
+              <button type="button" class="btn btn-ghost" id="cancelPairBtn">Cancel</button>
+            </div>
+          </div>
+        </section>
+      </aside>
+
+      <main class="main">
+        <section class="card" aria-labelledby="devicesHead">
+          <header class="card-head">
+            <h2 id="devicesHead" tabindex="-1">Paired phones</h2>
+            <span class="count" id="deviceCount" aria-label="Paired phones">0</span>
+          </header>
+          <ul class="devices" id="deviceList" hidden></ul>
+          <div class="empty" id="devicesEmpty">
+            <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-phone" /></svg>
+            <span>No phones paired yet. Pair one to reach this computer from anywhere.</span>
+          </div>
+        </section>
+
+        <section class="card" aria-labelledby="permHead">
+          <header class="card-head">
+            <h2 id="permHead">Permissions</h2>
+          </header>
+          <p class="notice" role="note">
+            <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-warn" /></svg>
+            <span>Anyone with your paired phone can run commands as you.</span>
+          </p>
+          <ul class="perms">
+            <li class="perm">
+              <div class="perm-text">
+                <div class="perm-name" id="permNameScreen">View screen</div>
+                <div class="perm-desc">See your screen live in your phone's browser.</div>
+              </div>
+              <input class="switch" type="checkbox" id="perm-screen" aria-labelledby="permNameScreen" />
+            </li>
+            <li class="perm warn">
+              <div class="perm-text">
+                <div class="perm-name" id="permNameControl">
+                  <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-warn" /></svg>
+                  Control mouse &amp; keyboard
+                </div>
+                <div class="perm-desc">Move the mouse and type on this computer.</div>
+              </div>
+              <input class="switch" type="checkbox" id="perm-control" aria-labelledby="permNameControl" />
+            </li>
+            <li class="perm warn">
+              <div class="perm-text">
+                <div class="perm-name" id="permNameTerminal">
+                  <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-warn" /></svg>
+                  Terminal
+                </div>
+                <div class="perm-desc">Open a shell. Every line you run is logged.</div>
+              </div>
+              <input class="switch" type="checkbox" id="perm-terminal" aria-labelledby="permNameTerminal" />
+            </li>
+            <li class="perm warn">
+              <div class="perm-text">
+                <div class="perm-name" id="permNameFiles">
+                  <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-warn" /></svg>
+                  Files
+                </div>
+                <div class="perm-desc">Browse, download, and upload files.</div>
+              </div>
+              <input class="switch" type="checkbox" id="perm-files" aria-labelledby="permNameFiles" />
+            </li>
+          </ul>
+        </section>
+
+        <section class="card" aria-labelledby="actHead">
+          <header class="card-head">
+            <h2 id="actHead">Activity</h2>
+          </header>
+          <div class="chips" role="group" aria-label="Filter activity">
+            <button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>
+            <button type="button" class="chip" data-filter="commands" aria-pressed="false">Commands</button>
+            <button type="button" class="chip" data-filter="files" aria-pressed="false">Files</button>
+            <button type="button" class="chip" data-filter="connections" aria-pressed="false">Connections</button>
+          </div>
+          <ol class="feed" id="feed" tabindex="0" aria-labelledby="actHead"></ol>
+          <p class="empty-line" id="feedEmpty" hidden></p>
+        </section>
+
+        <section class="card" aria-labelledby="settingsHead">
+          <header class="card-head">
+            <h2 id="settingsHead">Settings</h2>
+          </header>
+          <ul class="perms">
+            <li class="perm">
+              <div class="perm-text">
+                <div class="perm-name" id="setAutoName">Start Remora when I sign in</div>
+                <div class="perm-desc">Run in the background so your laptop stays reachable after a restart.</div>
+              </div>
+              <input class="switch" type="checkbox" id="setAutoStart" aria-labelledby="setAutoName" />
+            </li>
+            <li class="perm">
+              <div class="perm-text">
+                <div class="perm-name" id="setAwakeName">Keep laptop awake while Remora runs</div>
+                <div class="perm-desc">Stops sleep so phones can always reach you. The screen can still turn off.</div>
+              </div>
+              <input class="switch" type="checkbox" id="setKeepAwake" aria-labelledby="setAwakeName" />
+            </li>
+          </ul>
+          <div class="about">
+            <div class="about-text">
+              <div class="perm-name">Remora <span class="muted" id="version"></span></div>
+              <code class="mono-sm" id="webUrl"></code>
+            </div>
+            <button type="button" class="btn btn-ghost" id="openWebBtn">
+              <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-external" /></svg>
+              Open web app
+            </button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
