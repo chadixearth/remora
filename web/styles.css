@@ -445,77 +445,9 @@ body {
   background: #454540;
 }
 
-.terminal-tools {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.chrome-btn {
-  background: #2A2A27;
-  border: 1px solid #3D3D38;
-  color: #E6E4DD;
-  border-radius: 4px;
-  padding: 2px 7px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  cursor: pointer;
-}
-
-.chrome-btn:active {
-  background: #3D3D38;
-}
-
 .terminal-mount {
-  height: clamp(290px, 46dvh, 460px);
+  height: 320px;
   padding: 8px;
-}
-
-.composer-bar {
-  display: flex;
-  gap: 8px;
-  margin-top: 8px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-card);
-  padding: 8px;
-}
-
-.composer-input {
-  flex: 1;
-  min-width: 0;
-  min-height: 40px;
-  padding: 8px 10px;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-control);
-  background: var(--surface-subtle);
-  color: var(--ink);
-  font-family: var(--font-mono);
-  font-size: 13px;
-}
-
-.composer-input:focus {
-  outline: none;
-  border-color: var(--ink);
-  background: var(--surface);
-}
-
-.composer-send {
-  min-height: 40px;
-  padding: 0 14px;
-  border: 1px solid var(--ink);
-  border-radius: var(--radius-control);
-  background: var(--ink);
-  color: var(--surface);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 500;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.composer-send:active {
-  transform: scale(0.98);
 }
 
 .key-strip {
