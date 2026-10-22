@@ -7,8 +7,9 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="theme-color" content="#F7F6F3">
   <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./vendor/xterm.css">
   <link rel="stylesheet" href="./styles.css">
-  <title>ChadiEarthy — Remote Workspace Reference</title>
+  <title>ChadiEarthy — Mobile Terminal &amp; Workspace</title>
 </head>
 <body>
   <header class="top-header">
@@ -22,25 +23,94 @@
       </div>
       <div>
         <h1 class="brand-title">ChadiEarthy</h1>
-        <div class="brand-meta">chadie-laptop · static launcher &amp; reference</div>
+        <div class="brand-meta" id="host-subtitle">chadie-laptop · mobile shell</div>
       </div>
     </div>
-    <div class="status-pill connecting">
+    <div class="status-pill connecting" id="conn-pill">
       <span class="status-dot"></span>
-      <span>VS Code Tunnel</span>
+      <span id="conn-label">Standby</span>
     </div>
   </header>
 
-  <!-- VIEW 1: WORKSPACE LINKS -->
-  <main data-view="workspace" class="active">
-    <section class="section-block">
+  <!-- VIEW 1 (DEFAULT): MOBILE TERMINAL -->
+  <main data-view="terminal" class="active">
+    <div class="inline-banner" id="term-perm-banner" hidden>
+      Terminal permission is off on your laptop. Enable <strong>Terminal</strong> in Remora to attach the shell.
+    </div>
+
+    <section class="section-block" id="pair-card" style="margin-bottom:14px;">
+      <div class="card" style="padding:14px;">
+        <div class="section-header" style="margin-bottom:6px;">
+          <span class="section-kicker">Connect Laptop Shell</span>
+          <span class="section-note">One-time pairing link</span>
+        </div>
+        <form class="input-row" id="pair-form" style="margin-top:4px;">
+          <input class="text-input" id="pair-input" type="text" placeholder="Paste one-time #pair=... link" autocomplete="off">
+          <button class="btn-secondary" type="submit">Attach</button>
+        </form>
+        <div class="section-note" id="pair-feedback" style="margin-top:6px;"></div>
+      </div>
+    </section>
+
+    <section class="section-block" style="margin-bottom:14px;">
+      <div class="terminal-frame">
+        <div class="terminal-chrome">
+          <div style="display:flex;align-items:center;gap:8px;min-width:0;">
+            <div class="window-dots" aria-hidden="true">
+              <span class="window-dot"></span>
+              <span class="window-dot"></span>
+              <span class="window-dot"></span>
+            </div>
+            <span id="chrome-status" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">PS C:\Users\richa</span>
+          </div>
+          <div class="terminal-tools">
+            <button type="button" class="chrome-btn" id="btn-font-dec" aria-label="Decrease font size">A−</button>
+            <button type="button" class="chrome-btn" id="btn-font-inc" aria-label="Increase font size">A+</button>
+            <button type="button" class="chrome-btn" id="btn-term-clear">Clear</button>
+            <button type="button" class="chrome-btn" id="btn-term-reconnect">Reconnect</button>
+          </div>
+        </div>
+        <div class="terminal-mount" id="term-mount"></div>
+      </div>
+
+      <!-- Mobile Input Composer -->
+      <form class="composer-bar" id="composer-form">
+        <input
+          class="composer-input"
+          id="composer-input"
+          type="text"
+          placeholder="Type command (e.g. omp) or prompt…"
+          autocapitalize="off"
+          autocomplete="off"
+          autocorrect="off"
+          spellcheck="false"
+        >
+        <button class="composer-send" type="submit">Send ↵</button>
+      </form>
+
+      <!-- Tactile Key Strip -->
+      <div class="key-strip" aria-label="Terminal shortcut keys">
+        <kbd class="key-btn" data-key="OMP">omp</kbd>
+        <kbd class="key-btn" data-key="UP">↑</kbd>
+        <kbd class="key-btn" data-key="DOWN">↓</kbd>
+        <kbd class="key-btn" data-key="TAB">Tab</kbd>
+        <kbd class="key-btn" data-key="ESC">Esc</kbd>
+        <kbd class="key-btn" data-key="CTRL_C">Ctrl+C</kbd>
+        <kbd class="key-btn" data-key="ENTER">Return</kbd>
+      </div>
+    </section>
+  </main>
+
+  <!-- VIEW 2: WORKSPACE LINKS -->
+  <section data-view="workspace">
+    <div class="section-block">
       <div class="section-header">
-        <span class="section-kicker">Primary Workspace</span>
+        <span class="section-kicker">Full Code Editor</span>
         <span class="section-note">VS Code Remote Tunnel</span>
       </div>
       <div class="card">
-        <h2 class="card-headline">Mobile Workspace Link</h2>
-        <p class="card-copy">Points VS Code Web at <code>C:/Users/richa/mobile.code-workspace</code> (with <code>dev/</code>, <code>.omp/</code>, <code>Desktop</code>, and <code>Home</code> listed in the workspace file). On first load, sign in with GitHub (<code>chadixearth</code>) to attach.</p>
+        <h2 class="card-headline">Pre-Mounted Mobile Workspace</h2>
+        <p class="card-copy">Opens VS Code Web pointing to <code>C:/Users/richa/mobile.code-workspace</code> with <code>dev/</code>, <code>.omp/</code>, <code>Desktop</code>, and <code>Home</code> mounted in the Explorer sidebar.</p>
         <a class="btn-primary" href="https://vscode.dev/tunnel/chadie-laptop/C:/Users/richa/mobile.code-workspace">
           <span>Open Mobile Workspace</span>
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -48,12 +118,12 @@
           </svg>
         </a>
       </div>
-    </section>
+    </div>
 
-    <section class="section-block">
+    <div class="section-block">
       <div class="section-header">
-        <span class="section-kicker">Direct Directory Links</span>
-        <span class="section-note">vscode.dev/tunnel/chadie-laptop</span>
+        <span class="section-kicker">Direct Directory Mounts</span>
+        <span class="section-note">1-tap open</span>
       </div>
       <div class="bento-grid">
         <a class="bento-item" href="https://vscode.dev/tunnel/chadie-laptop/C:/Users/richa/.omp">
@@ -117,21 +187,40 @@
           <div class="bento-path">C:/Users/richa/Desktop</div>
         </a>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="section-block">
-      <div class="inline-banner">
-        <strong>Status Note:</strong> The standalone Remora phone pairing client (custom WebSocket screen/terminal/file client) is not built or deployed. This static page provides direct shortcuts and command snippets for your VS Code Remote Tunnel.
+  <!-- VIEW 3: SYSTEM & COMMANDS -->
+  <section data-view="system">
+    <div class="section-block">
+      <div class="section-header">
+        <span class="section-kicker">Host Telemetry</span>
+        <span class="section-note">Live when shell attached</span>
       </div>
-    </section>
-  </main>
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-label">CPU</div>
+          <div class="metric-value" id="metric-cpu">—</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">RAM</div>
+          <div class="metric-value" id="metric-mem">—</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Power</div>
+          <div class="metric-value" id="metric-bat">AC</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Uptime</div>
+          <div class="metric-value" id="metric-up">—</div>
+        </div>
+      </div>
+    </div>
 
-  <!-- VIEW 2: COMMAND SNIPPETS -->
-  <section data-view="commands">
     <div class="section-block">
       <div class="section-header">
         <span class="section-kicker">Command Snippets</span>
-        <span class="section-note">1-tap copy for VS Code Terminal</span>
+        <span class="section-note">1-tap copy</span>
       </div>
       <div class="divided-list">
         <div class="list-row">
@@ -150,13 +239,6 @@
         </div>
         <div class="list-row">
           <div class="row-main">
-            <div class="row-title">Inspect Tunnel Heartbeat Log</div>
-            <div class="row-code">Get-Content "$env:USERPROFILE\.vscode\cli\tunnel-service.log" -Tail 20</div>
-          </div>
-          <button class="btn-secondary" data-copy="Get-Content &quot;$env:USERPROFILE\.vscode\cli\tunnel-service.log&quot; -Tail 20">Copy</button>
-        </div>
-        <div class="list-row">
-          <div class="row-main">
             <div class="row-title">Disable Tunnel Startup</div>
             <div class="row-code">code tunnel service uninstall</div>
           </div>
@@ -171,10 +253,7 @@
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- VIEW 3: SYSTEM & POWER REFERENCE -->
-  <section data-view="system">
     <div class="section-block">
       <div class="section-header">
         <span class="section-kicker">Power &amp; Connection Rules</span>
@@ -202,13 +281,6 @@
           </div>
           <span class="status-pill">User Logon</span>
         </div>
-        <div class="list-row">
-          <div class="row-main">
-            <div class="row-title">When Powered Off</div>
-            <div class="row-code">Cannot be powered on remotely. Requires physical power button press.</div>
-          </div>
-          <span class="status-pill offline">Hardware Only</span>
-        </div>
       </div>
     </div>
   </section>
@@ -216,7 +288,14 @@
   <!-- BOTTOM NAVIGATION -->
   <nav class="bottom-nav" aria-label="Primary Navigation">
     <div class="bottom-nav-inner" style="grid-template-columns: repeat(3, 1fr);">
-      <button class="nav-tab active" data-target="workspace">
+      <button class="nav-tab active" data-target="terminal">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <rect x="2" y="2.5" width="12" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M5 6L7.5 8L5 10M8.5 10H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/>
+        </svg>
+        <span>Terminal</span>
+      </button>
+      <button class="nav-tab" data-target="workspace">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <rect x="2" y="2" width="5" height="5" stroke="currentColor" stroke-width="1.4"/>
           <rect x="9" y="2" width="5" height="5" stroke="currentColor" stroke-width="1.4"/>
@@ -225,49 +304,16 @@
         </svg>
         <span>Workspace</span>
       </button>
-      <button class="nav-tab" data-target="commands">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <rect x="2" y="2.5" width="12" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/>
-          <path d="M5 6L7.5 8L5 10M8.5 10H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/>
-        </svg>
-        <span>Commands</span>
-      </button>
       <button class="nav-tab" data-target="system">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <rect x="2" y="3" width="12" height="8.5" rx="1" stroke="currentColor" stroke-width="1.4"/>
           <path d="M5.5 14H10.5M8 11.5V14" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/>
         </svg>
-        <span>Power Rules</span>
+        <span>System</span>
       </button>
     </div>
   </nav>
 
-  <script>
-    document.querySelectorAll('.nav-tab').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const target = btn.getAttribute('data-target');
-        document.querySelectorAll('.nav-tab').forEach((b) => b.classList.toggle('active', b === btn));
-        document.querySelectorAll('[data-view]').forEach((p) => p.classList.toggle('active', p.getAttribute('data-view') === target));
-      });
-    });
-
-    document.querySelectorAll('[data-copy]').forEach((btn) => {
-      btn.addEventListener('click', async () => {
-        const text = btn.getAttribute('data-copy') || '';
-        try {
-          await navigator.clipboard.writeText(text);
-          const orig = btn.textContent;
-          btn.textContent = 'Copied';
-          btn.classList.add('copied');
-          setTimeout(() => {
-            btn.textContent = orig;
-            btn.classList.remove('copied');
-          }, 1200);
-        } catch {
-          window.prompt('Copy command:', text);
-        }
-      });
-    });
-  </script>
+  <script type="module" src="./app.js"></script>
 </body>
 </html>
