@@ -1,0 +1,9 @@
+{
+  "name": "Remora — ChadiEarthy Companion",
+  "short_name": "Remora",
+  "description": "Utilitarian mobile workspace companion for ChadiEarthy",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#F7F6F3",
+  "theme_color": "#F7F6F3"
+}

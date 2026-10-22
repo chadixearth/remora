@@ -2,100 +2,380 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Remora — Under Construction</title>
-  <style>
-    :root {
-      --bg: #0b0f14;
-      --surface: #121821;
-      --border: #1f2a37;
-      --text: #e6edf3;
-      --muted: #8b98a5;
-      --accent: #2dd4bf;
-      --warning: #fbbf24;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-    }
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 1rem;
-      padding: 2.25rem;
-      max-width: 500px;
-      width: 100%;
-      text-align: center;
-    }
-    h1 {
-      font-size: 1.6rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      color: var(--text);
-    }
-    p {
-      color: var(--muted);
-      font-size: 0.95rem;
-      line-height: 1.6;
-      margin-bottom: 1.25rem;
-    }
-    .badge {
-      display: inline-block;
-      background: rgba(251, 191, 36, 0.1);
-      color: var(--warning);
-      border: 1px solid rgba(251, 191, 36, 0.25);
-      border-radius: 9999px;
-      padding: 0.25rem 0.85rem;
-      font-size: 0.8rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-    }
-    .notice {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border);
-      border-radius: 0.5rem;
-      padding: 0.85rem 1rem;
-      font-size: 0.85rem;
-      color: var(--muted);
-      text-align: left;
-      margin-bottom: 1.5rem;
-    }
-    .notice strong { color: var(--text); }
-    .links a {
-      display: inline-block;
-      background: var(--accent);
-      color: var(--bg);
-      font-weight: 600;
-      text-decoration: none;
-      padding: 0.65rem 1.4rem;
-      border-radius: 0.5rem;
-      font-size: 0.9rem;
-      transition: opacity 0.15s;
-    }
-    .links a:hover { opacity: 0.9; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#F7F6F3">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./vendor/xterm.css">
+  <link rel="stylesheet" href="./styles.css">
+  <title>Remora — ChadiEarthy Companion</title>
 </head>
 <body>
-  <div class="card">
-    <div class="badge">Companion App In Development</div>
-    <h1>Remora Web Companion</h1>
-    <p>This is the future home of the Remora phone PWA. The mobile client is currently under construction and cannot pair with desktop instances yet.</p>
-    
-    <div class="notice">
-      <strong>Current Status:</strong><br>
-      The desktop application source is available on GitHub. Web pairing, mobile screen streaming, and remote terminal interfaces are still being built.
+  <header class="top-header">
+    <div class="brand-group">
+      <div class="brand-mark" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 3.5H9.5C11.433 3.5 13 5.067 13 7C13 8.933 11.433 10.5 9.5 10.5H3V3.5Z" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M8.5 10.5L13 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/>
+          <path d="M3 1.5V14.5" stroke="currentColor" stroke-width="1.6"/>
+        </svg>
+      </div>
+      <div>
+        <h1 class="brand-title">ChadiEarthy</h1>
+        <div class="brand-meta" id="host-subtitle">chadie-laptop · remote workspace</div>
+      </div>
+    </div>
+    <div class="status-pill online" id="conn-pill">
+      <span class="status-dot"></span>
+      <span id="conn-label">Tunnel Ready</span>
+    </div>
+  </header>
+
+  <!-- VIEW 1: WORKSPACE -->
+  <main data-view="workspace" class="active">
+    <section class="section-block">
+      <div class="section-header">
+        <span class="section-kicker">Primary Workspace</span>
+        <span class="section-note">VS Code Remote Tunnel</span>
+      </div>
+      <div class="card">
+        <h2 class="card-headline">Full Editor, Terminal &amp; Files</h2>
+        <p class="card-copy">Opens your pre-configured mobile workspace with <code>dev/</code>, <code>.omp/</code>, <code>Desktop</code>, and <code>Home</code> already mounted in the sidebar.</p>
+        <a class="btn-primary" href="https://vscode.dev/tunnel/chadie-laptop/C:/Users/richa/mobile.code-workspace">
+          <span>Open Mobile Workspace</span>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3.5 8H12.5M12.5 8L8.5 4M12.5 8L8.5 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="section-header">
+        <span class="section-kicker">Direct Directories</span>
+        <span class="section-note">1-tap mount</span>
+      </div>
+      <div class="bento-grid">
+        <a class="bento-item" href="https://vscode.dev/tunnel/chadie-laptop/C:/Users/richa/.omp">
+          <div class="bento-top">
+            <span class="bento-title">OMP Agent</span>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <rect x="2.5" y="2.5" width="11" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/>
+              <path d="M5.5 6.5L7.5 8L5.5 9.5M8.5 9.5H10.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/>
+            </svg>
+          </div>
+          <div class="bento-path">C:/Users/richa/.omp</div>
+        </a>
+
+        <a class="bento-item" href="https://vscode.dev/tunnel/chadie-laptop/C:/Users/richa/dev">
+          <div class="bento-top">
+            <span class="bento-title">All Projects</span>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M2 4.5C2 3.94772 2.44772 3.5 3 3.5H6.2L7.7 5H13C13.5523 5 14 5.44772 14 6V12C14 12.5523 13.5523 13 13 13H3C2.44772 13 2 12.5523 2 12V4.5Z" stroke="currentColor" stroke-width="1.4"/>
+            </svg>
+          </div>
+          <div class="bento-path">C:/Users/richa/dev</div>
+        </a>
+
+        <a class="bento-item" href="https://vscode.dev/tunnel/chadie-laptop/C:/Users/richa/dev/remora">
+          <div class="bento-top">
+            <span class="bento-title">remora</span>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4.5 11.5L11.5 4.5M11.5 4.5H6M11.5 4.5V10" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/>
+            </svg>
+          </div>
+          <div class="bento-path">dev/remora</div>
+        </a>
+
+        <a class="bento-item" href="https://vscode.dev/tunnel/chadie-laptop/C:/Users/richa/dev/profound-tracker">
+          <div class="bento-top">
+            <span class="bento-title">profound-tracker</span>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4.5 11.5L11.5 4.5M11.5 4.5H6M11.5 4.5V10" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/>
+            </svg>
+          </div>
+          <div class="bento-path">dev/profound-tracker</div>
+        </a>
+
+        <a class="bento-item" href="https://vscode.dev/tunnel/chadie-laptop/C:/Users/richa/dev/graphyloop">
+          <div class="bento-top">
+            <span class="bento-title">graphyloop</span>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4.5 11.5L11.5 4.5M11.5 4.5H6M11.5 4.5V10" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/>
+            </svg>
+          </div>
+          <div class="bento-path">dev/graphyloop</div>
+        </a>
+
+        <a class="bento-item" href="https://vscode.dev/tunnel/chadie-laptop/C:/Users/richa/Desktop">
+          <div class="bento-top">
+            <span class="bento-title">Desktop</span>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4.5 11.5L11.5 4.5M11.5 4.5H6M11.5 4.5V10" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/>
+            </svg>
+          </div>
+          <div class="bento-path">C:/Users/richa/Desktop</div>
+        </a>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="section-header">
+        <span class="section-kicker">Host Telemetry</span>
+        <span class="section-note">Live when paired</span>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-label">CPU</div>
+          <div class="metric-value" id="metric-cpu">—</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">RAM</div>
+          <div class="metric-value" id="metric-mem">—</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Power</div>
+          <div class="metric-value" id="metric-bat">AC</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Uptime</div>
+          <div class="metric-value" id="metric-up">—</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block" id="pair-card">
+      <div class="section-header">
+        <span class="section-kicker">Direct Remora Session</span>
+        <span class="section-note">Optional QR / Link Pair</span>
+      </div>
+      <div class="card">
+        <p class="card-copy" style="margin-bottom:8px;">When the Remora desktop app is open on your laptop, scan its QR code or paste its pairing link below to enable in-page terminal, file browser, and display streaming.</p>
+        <form class="input-row" id="pair-form">
+          <input class="text-input" id="pair-input" type="text" placeholder="Paste #pair=... link from Remora Desktop" autocomplete="off">
+          <button class="btn-secondary" type="submit">Pair</button>
+        </form>
+        <div class="section-note" id="pair-feedback" style="margin-top:8px;"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- VIEW 2: TERMINAL -->
+  <section data-view="terminal">
+    <div class="section-block">
+      <div class="section-header">
+        <span class="section-kicker">Interactive Shell</span>
+        <span class="section-note">PowerShell · node-pty</span>
+      </div>
+      <div class="inline-banner" id="term-perm-note" hidden>
+        Terminal permission is off by default. Switch on <strong>Terminal</strong> in the Remora window on your laptop, or use the VS Code Workspace terminal.
+      </div>
+      <div class="terminal-frame">
+        <div class="terminal-chrome">
+          <div class="window-dots" aria-hidden="true">
+            <span class="window-dot"></span>
+            <span class="window-dot"></span>
+            <span class="window-dot"></span>
+          </div>
+          <span>PS C:\Users\richa</span>
+        </div>
+        <div class="terminal-mount" id="term-mount"></div>
+      </div>
+      <div class="key-strip" aria-label="Terminal keys">
+        <kbd class="key-btn" data-term-send="omp">omp</kbd>
+        <kbd class="key-btn" data-term-send="git status">git status</kbd>
+        <kbd class="key-btn" data-term-send="TAB">Tab</kbd>
+        <kbd class="key-btn" data-term-send="CTRL_C">Ctrl+C</kbd>
+        <kbd class="key-btn" data-term-send="ESC">Esc</kbd>
+        <kbd class="key-btn" data-term-send="ENTER">Return</kbd>
+      </div>
     </div>
 
-    <div class="links">
-      <a href="https://github.com/chadixearth/remora" target="_blank" rel="noopener">Follow Progress on GitHub</a>
+    <div class="section-block">
+      <div class="section-header">
+        <span class="section-kicker">Quick Commands</span>
+        <span class="section-note">1-tap copy to clipboard</span>
+      </div>
+      <div class="divided-list">
+        <div class="list-row">
+          <div class="row-main">
+            <div class="row-title">Launch OMP CLI</div>
+            <div class="row-code">omp</div>
+          </div>
+          <button class="btn-secondary" data-copy="omp">Copy</button>
+        </div>
+        <div class="list-row">
+          <div class="row-main">
+            <div class="row-title">Check Tunnel Status</div>
+            <div class="row-code">code tunnel status</div>
+          </div>
+          <button class="btn-secondary" data-copy="code tunnel status">Copy</button>
+        </div>
+        <div class="list-row">
+          <div class="row-main">
+            <div class="row-title">Inspect Tunnel Heartbeat Log</div>
+            <div class="row-code">Get-Content "$env:USERPROFILE\.vscode\cli\tunnel-service.log" -Tail 20</div>
+          </div>
+          <button class="btn-secondary" data-copy="Get-Content &quot;$env:USERPROFILE\.vscode\cli\tunnel-service.log&quot; -Tail 20">Copy</button>
+        </div>
+        <div class="list-row">
+          <div class="row-main">
+            <div class="row-title">Disable Tunnel Startup</div>
+            <div class="row-code">code tunnel service uninstall</div>
+          </div>
+          <button class="btn-secondary" data-copy="code tunnel service uninstall">Copy</button>
+        </div>
+        <div class="list-row">
+          <div class="row-main">
+            <div class="row-title">Enable Tunnel Startup</div>
+            <div class="row-code">code tunnel service install</div>
+          </div>
+          <button class="btn-secondary" data-copy="code tunnel service install">Copy</button>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <!-- VIEW 3: FILES -->
+  <section data-view="files">
+    <div class="section-block">
+      <div class="section-header">
+        <span class="section-kicker" id="files-current-path">System Roots</span>
+        <div style="display:flex;gap:6px;">
+          <button class="btn-secondary" id="files-up-btn" style="min-height:32px;padding:4px 10px;">Up</button>
+          <button class="btn-secondary" id="files-upload-btn" style="min-height:32px;padding:4px 10px;">Upload</button>
+          <input type="file" id="file-upload-input" hidden>
+        </div>
+      </div>
+      <div class="inline-banner" id="files-perm-note" hidden>
+        Files permission is off by default. Enable <strong>Files</strong> in the Remora desktop window on your laptop to browse or download here.
+      </div>
+      <div class="divided-list" id="files-list">
+        <div class="list-row">
+          <div class="row-main">
+            <div class="row-title">Home Directory</div>
+            <div class="row-code">C:/Users/richa</div>
+          </div>
+          <a class="btn-secondary" href="https://vscode.dev/tunnel/chadie-laptop/C:/Users/richa">Open in Editor</a>
+        </div>
+        <div class="list-row">
+          <div class="row-main">
+            <div class="row-title">OMP Directory</div>
+            <div class="row-code">C:/Users/richa/.omp</div>
+          </div>
+          <a class="btn-secondary" href="https://vscode.dev/tunnel/chadie-laptop/C:/Users/richa/.omp">Open in Editor</a>
+        </div>
+        <div class="list-row">
+          <div class="row-main">
+            <div class="row-title">Development Projects</div>
+            <div class="row-code">C:/Users/richa/dev</div>
+          </div>
+          <a class="btn-secondary" href="https://vscode.dev/tunnel/chadie-laptop/C:/Users/richa/dev">Open in Editor</a>
+        </div>
+        <div class="list-row">
+          <div class="row-main">
+            <div class="row-title">Desktop</div>
+            <div class="row-code">C:/Users/richa/Desktop</div>
+          </div>
+          <a class="btn-secondary" href="https://vscode.dev/tunnel/chadie-laptop/C:/Users/richa/Desktop">Open in Editor</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIEW 4: DISPLAY & POWER -->
+  <section data-view="display">
+    <div class="section-block">
+      <div class="section-header">
+        <span class="section-kicker">Display Stream</span>
+        <select id="screen-quality" class="btn-secondary" style="min-height:32px;padding:4px 8px;">
+          <option value="fast">Fast (960p)</option>
+          <option value="balanced" selected>Balanced (720p)</option>
+          <option value="sharp">Sharp (1080p)</option>
+        </select>
+      </div>
+      <div class="screen-stage">
+        <canvas id="screen-canvas" width="1280" height="720"></canvas>
+      </div>
+      <div class="section-note" id="screen-status-note" style="margin-top:8px;">
+        Pair with the Remora desktop app to stream live display frames.
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-header">
+        <span class="section-kicker">Power &amp; Connection Rules</span>
+        <span class="section-note">Verified on ChadiEarthy</span>
+      </div>
+      <div class="divided-list">
+        <div class="list-row">
+          <div class="row-main">
+            <div class="row-title">Idle Standby Timeout</div>
+            <div class="row-code">Set to Never on both AC and battery power (0x00000000).</div>
+          </div>
+          <span class="status-pill online">Never Sleeps</span>
+        </div>
+        <div class="list-row">
+          <div class="row-main">
+            <div class="row-title">Lid Close Action</div>
+            <div class="row-code">Currently set to Sleep (0x00000001). Keep laptop lid open.</div>
+          </div>
+          <span class="status-pill connecting">Sleeps on Close</span>
+        </div>
+        <div class="list-row">
+          <div class="row-main">
+            <div class="row-title">Startup Registration</div>
+            <div class="row-code">HKCU Run entry starts code-tunnel.exe when your user logs in.</div>
+          </div>
+          <span class="status-pill">User Logon</span>
+        </div>
+        <div class="list-row">
+          <div class="row-main">
+            <div class="row-title">When Powered Off</div>
+            <div class="row-code">Cannot be powered on remotely. Requires physical power button press.</div>
+          </div>
+          <span class="status-pill offline">Hardware Only</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM NAVIGATION -->
+  <nav class="bottom-nav" aria-label="Primary Navigation">
+    <div class="bottom-nav-inner">
+      <button class="nav-tab active" data-target="workspace">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <rect x="2" y="2" width="5" height="5" stroke="currentColor" stroke-width="1.4"/>
+          <rect x="9" y="2" width="5" height="5" stroke="currentColor" stroke-width="1.4"/>
+          <rect x="2" y="9" width="5" height="5" stroke="currentColor" stroke-width="1.4"/>
+          <rect x="9" y="9" width="5" height="5" stroke="currentColor" stroke-width="1.4"/>
+        </svg>
+        <span>Workspace</span>
+      </button>
+      <button class="nav-tab" data-target="terminal">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <rect x="2" y="2.5" width="12" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M5 6L7.5 8L5 10M8.5 10H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/>
+        </svg>
+        <span>Terminal</span>
+      </button>
+      <button class="nav-tab" data-target="files">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M2 4C2 3.44772 2.44772 3 3 3H6.2L7.7 4.5H13C13.5523 4.5 14 4.94772 14 5.5V12C14 12.5523 13.5523 13 13 13H3C2.44772 13 2 12.5523 2 12V4Z" stroke="currentColor" stroke-width="1.4"/>
+        </svg>
+        <span>Files</span>
+      </button>
+      <button class="nav-tab" data-target="display">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <rect x="2" y="3" width="12" height="8.5" rx="1" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M5.5 14H10.5M8 11.5V14" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/>
+        </svg>
+        <span>System</span>
+      </button>
+    </div>
+  </nav>
+
+  <script type="module" src="./app.js"></script>
 </body>
 </html>
