@@ -173,6 +173,15 @@ async function main() {
   handle('setAutoStart', (on) => { store.setFlag('autoStart', Boolean(on)); applyAutoStart(); });
   handle('setKeepAwake', (on) => { store.setFlag('keepAwake', Boolean(on)); applyKeepAwake(); });
   handle('restartTunnel', () => tunnel.restart());
+  handle('stopTunnel', () => {
+    beacon.stop();
+    tunnel.stop();
+    store.log('tunnel', 'Deactivated tunnel from laptop');
+  });
+  handle('startTunnel', () => {
+    store.log('tunnel', 'Reactivated tunnel from laptop');
+    return tunnel.start(port);
+  });
   handle('getActivity', (limit) => store.recentActivity(Math.min(Number(limit) || 200, 500)));
   handle('copyText', (text) => clipboard.writeText(String(text)));
   handle('openExternal', (url) => {
@@ -226,6 +235,17 @@ async function main() {
       { type: 'separator' },
       { label: 'Open Remora', click: showWindow },
       { label: 'Pair a phone…', click: () => { showWindow(); void createPairing(); } },
+      {
+        label: online || tunnel.status === 'starting' ? 'Deactivate tunnel' : 'Reactivate tunnel',
+        click: () => {
+          if (online || tunnel.status === 'starting') {
+            beacon.stop();
+            tunnel.stop();
+          } else {
+            void tunnel.start(port);
+          }
+        },
+      },
       { type: 'separator' },
       { label: 'Quit Remora', click: () => { quitting = true; app.quit(); } },
     ]));

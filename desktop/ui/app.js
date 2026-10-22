@@ -65,6 +65,8 @@
     copyUrl: $('copyUrl'),
     beaconErr: $('beaconErr'),
     retryBtn: $('retryBtn'),
+    deactivateBtn: $('deactivateBtn'),
+    reactivateBtn: $('reactivateBtn'),
     pairCard: $('pairCard'),
     pairIdle: $('pairIdle'),
     pairActive: $('pairActive'),
@@ -244,6 +246,8 @@
     /** @type {[HTMLElement, string][]} */
     const pairs = [
       [d.retryBtn, 'retry'],
+      [d.deactivateBtn, 'deactivate'],
+      [d.reactivateBtn, 'reactivate'],
       [d.pairBtn, 'pair'],
       [d.cancelPairBtn, 'cancelPair'],
       [d.openWebBtn, 'web'],
@@ -350,7 +354,10 @@
       d.connUrl.textContent = url;
       d.connUrl.title = url;
     }
-    d.retryBtn.hidden = status !== 'offline' && status !== 'error';
+    const isRunning = status === 'online' || status === 'starting';
+    d.deactivateBtn.hidden = !isRunning;
+    d.reactivateBtn.hidden = isRunning;
+    d.retryBtn.hidden = status !== 'error';
 
     const beaconError = s.beacon && s.beacon.error;
     d.beaconErr.hidden = !beaconError;
@@ -607,6 +614,12 @@
     });
     d.retryBtn.addEventListener('click', () =>
       act('retry', () => api.restartTunnel(), "Couldn't restart the tunnel"),
+    );
+    d.deactivateBtn?.addEventListener('click', () =>
+      act('deactivate', () => api.stopTunnel(), "Couldn't deactivate the tunnel"),
+    );
+    d.reactivateBtn?.addEventListener('click', () =>
+      act('reactivate', () => api.startTunnel(), "Couldn't reactivate the tunnel"),
     );
 
     d.pairBtn.addEventListener('click', () =>

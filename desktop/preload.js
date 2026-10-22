@@ -25,6 +25,8 @@ contextBridge.exposeInMainWorld('remora', {
   setAutoStart: invoke('setAutoStart'),
   setKeepAwake: invoke('setKeepAwake'),
   restartTunnel: invoke('restartTunnel'),
+  stopTunnel: invoke('stopTunnel'),
+  startTunnel: invoke('startTunnel'),
   getActivity: invoke('getActivity'),
   onActivity: (/** @type {(entry: any) => void} */ cb) => subscribe('remora:activity', cb),
   copyText: invoke('copyText'),
